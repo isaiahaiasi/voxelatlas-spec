@@ -1,14 +1,18 @@
 {
   "name": "@isaiahaiasi/voxelatlas-spec",
-  "version": "0.1.1",
+  "version": "0.1.7",
   "description": "OpenAPI documentation for the VoxelAtlas API",
   "homepage": "https://github.com/isaiahaiasi/voxelatlas-spec",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
-    "public"
+    "public",
+    "types",
+    "index.d.ts"
   ],
   "scripts": {
-    "jsonify": "js-yaml openapi.yml > public/openapi.json",
+    "build-types": "openapi-typescript schema.yml > types/generated-types.ts",
+    "jsonify": "js-yaml schema.yml > public/schema.json",
     "test": "npm run jsonify && jest"
   },
   "repository": {
@@ -24,6 +28,7 @@
   },
   "devDependencies": {
     "jest": "^28.1.1",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "openapi-typescript": "^5.4.0"
   }
 }

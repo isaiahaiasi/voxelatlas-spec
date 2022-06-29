@@ -1,1 +1,1 @@
-module.exports = require('./public/openapi.json');
+module.exports = require('./public/schema.json');

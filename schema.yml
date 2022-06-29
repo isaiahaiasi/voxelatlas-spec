@@ -1,17 +1,14 @@
 openapi: 3.0.0
 
 # TODO:
-# - Pagination
-#   - params: define "direction" param for "prev" & "last" links?
-#   - links: cannot figure out implementation on these...
 # - Security
 #   - not sure how to actually define security requirements beyond "authenticated"
 # - Schema constraints
 # - RequestBody constraints
 
 info:
-  title: ShoeVox API
-  description: "**ShoeVox** is an open-source social 3D worldbuilding website."
+  title: VoxelAtlas API
+  description: "**VoxelAtlas** is an open-source social 3D worldbuilding website."
   version: 0.1.0
 
 servers:
