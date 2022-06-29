@@ -1,0 +1,17 @@
+{
+  "name": "@isaiahaiasi/voxeldrift-api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "jsonify": "js-yaml openapi.yml > public/openapi.json",
+    "test": "npm run jsonify && jest"
+  },
+  "keywords": [],
+  "author": "Isaiah Althouse",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^28.1.1",
+    "js-yaml": "^4.1.0"
+  }
+}
