@@ -1,4 +1,4 @@
-const api = require('../public/schema.json');
+const api = require('../schema.json');
 
 /** Strip 'parameters' property so path object only contains methods */
 function getMethodsFromPath(path) {
