@@ -1,15 +1,26 @@
 {
-  "name": "@isaiahaiasi/voxeldrift-api",
+  "name": "@isaiahaiasi/voxelatlas-spec",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "OpenAPI documentation for the VoxelAtlas API",
+  "homepage": "https://github.com/isaiahaiasi/voxelatlas-spec",
+  "files": [
+    "public"
+  ],
   "scripts": {
     "jsonify": "js-yaml openapi.yml > public/openapi.json",
     "test": "npm run jsonify && jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isaiahaiasi/voxelatlas-spec"
+  },
   "keywords": [],
   "author": "Isaiah Althouse",
   "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "devDependencies": {
     "jest": "^28.1.1",
     "js-yaml": "^4.1.0"
