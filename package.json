@@ -1,8 +1,9 @@
 {
   "name": "@isaiahaiasi/voxelatlas-spec",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OpenAPI documentation for the VoxelAtlas API",
   "homepage": "https://github.com/isaiahaiasi/voxelatlas-spec",
+  "main": "index.js",
   "files": [
     "public"
   ],
