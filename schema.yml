@@ -1,10 +1,8 @@
 openapi: 3.0.0
 
-# TODO:
-# - Security
-#   - not sure how to actually define security requirements beyond "authenticated"
-# - Schema constraints
-# - RequestBody constraints
+# TODO: Security
+# not sure how to actually define security requirements beyond "authenticated"
+# TODO: Schema/RequestBody constraints
 
 info:
   title: VoxelAtlas API
@@ -42,7 +40,7 @@ paths:
     post:
       summary: Creates a new user.
       operationId: createUser
-      tags: [users]
+      tags: [users, authenticated]
       requestBody:
         $ref: "#/components/requestBodies/UserBody"
       responses:
@@ -78,7 +76,6 @@ paths:
                     items:
                       $ref: "#/components/schemas/Room"
 
-  # USERS sub-resources
   /users/{userid}:
     parameters:
       - in: path
@@ -103,8 +100,8 @@ paths:
     # TODO: Not decided on best Method to update entities.
     put:
       summary: Updates a user.
-      operationId: updateUserById
-      tags: [users]
+      operationId: updateUser
+      tags: [users, authenticated, authorized]
       requestBody:
         # Not sure if this is 100% appropriate.
         # Is it sufficient to add an optional "oldPassword" field?
@@ -123,9 +120,9 @@ paths:
         "404":
           description: User could not be found.
     delete:
-      tags: [users]
+      tags: [users, authenticated, authorized]
       summary: Deletes a user.
-      operationId: deleteUserById
+      operationId: deleteUser
       responses:
         "200":
           description: User was deleted successfully.
@@ -166,13 +163,12 @@ paths:
                       $ref: "#/components/schemas/Room"
         "404":
           description: User not found.
-
-    # TODO: This should probably just be POST/rooms
     post:
-      # TODO: REQ BODY
       summary: Posts a new Room under the given User.
       operationId: createRoom
-      tags: [users, rooms]
+      tags: [users, rooms, authenticated, authorized]
+      requestBody:
+        $ref: "#/components/requestBodies/RoomBody"
       responses:
         "200":
           description: The newly created Room.
@@ -198,7 +194,7 @@ paths:
     get:
       summary: Returns a list of users. Client ID must match {userid}.
       operationId: getFriendshipsByUserId
-      tags: [users, friendships, paginated]
+      tags: [users, friendships, paginated, authenticated, authorized]
       parameters:
         - $ref: "#/components/parameters/Cursor"
         - $ref: "#/components/parameters/Limit"
@@ -227,7 +223,7 @@ paths:
         Creates a Friendship object where the Requester is the CLIENT user
         and the Recipient is the {userid}. The status is 'PENDING'.
       operationId: createFriendshipByUserId
-      tags: [users, friendships]
+      tags: [users, friendships, authenticated, authorized]
       responses:
         "200":
           description: The Friendship object created.
@@ -245,7 +241,7 @@ paths:
         CLIENT ID must match {userid} for 'ACCEPTED' to be valid.
         CLIENT ID must match recipient or requester for 'REJECTED' to be valid.
       operationId: updateFriendshipByUserId
-      tags: [users, friendships]
+      tags: [users, friendships, authenticated, authorized]
       requestBody:
         $ref: "#/components/requestBodies/FriendRequestUpdateBody"
       responses:
@@ -275,7 +271,7 @@ paths:
     delete:
       summary: Deletes a Friend from a User's friends list.
       operationId: deleteFriend
-      tags: [users, friendships]
+      tags: [users, friendships, authenticated, authorized]
       responses:
         "200":
           description: Returns the successfully deleted Friend.
@@ -312,8 +308,8 @@ paths:
           description: Room with requested ID could not be found.
     put:
       summary: Updates a room by its ID.
-      operationId: updateRoomById
-      tags: [rooms]
+      operationId: updateRoom
+      tags: [rooms, authenticated, authorized]
       requestBody:
         $ref: "#/components/requestBodies/RoomBody"
       responses:
@@ -331,8 +327,8 @@ paths:
           description: Room could not be found.
     delete:
       summary: Deletes a room by its ID.
-      operationId: deleteRoomById
-      tags: [rooms]
+      operationId: deleteRoom
+      tags: [rooms, authenticated, authorized]
       responses:
         "200":
           description: Returns the successfully deleted room.
@@ -380,7 +376,7 @@ paths:
     post:
       summary: Creates comment on room.
       operationId: createComment
-      tags: [rooms, comments]
+      tags: [rooms, comments, authenticated]
       requestBody:
         $ref: "#/components/requestBodies/CommentBody"
       responses:
@@ -429,11 +425,11 @@ paths:
                       $ref: "#/components/schemas/Like"
         "404":
           description: Room not found.
+    # TODO: This should follow upsert behavior, so maybe PUT would be more appropriate?
     post:
-      # TODO: where does the userid come from? Body, or auth headers?
       summary: Adds a Like on a Room.
       operationId: createLike
-      tags: [rooms, likes]
+      tags: [rooms, likes, authenticated]
       responses:
         "200":
           description: Returns the successfully added Like.
@@ -457,7 +453,7 @@ paths:
     delete:
       summary: Delete given comment.
       operationId: deleteComment
-      tags: [comments]
+      tags: [comments, authenticated, authorized]
       responses:
         "200":
           description: Returns the successfully deleted comment.
@@ -470,8 +466,6 @@ paths:
         "404":
           description: Comment could not be found.
 
-  # TODO: not actually sure what the proper path for a Like resource should be
-  # Its ID is derivative of room + user.
   /likes/{likeid}:
     parameters:
       - in: path
@@ -483,7 +477,7 @@ paths:
     delete:
       summary: Delete given Like.
       operationId: deleteLike
-      tags: [likes]
+      tags: [likes, authenticated, authorized]
       responses:
         "200":
           description: Returns the successfully deleted Like.
@@ -622,12 +616,6 @@ components:
                 type: string
                 minLength: 3
                 maxLength: 15
-              password:
-                type: string
-                minLength: 8
-              passwordConfirm:
-                type: string
-                minLength: 8
 
     # TODO: Not sure what the actual implementation here is.
     # It almost certainly needs to be sent as multipart form data
