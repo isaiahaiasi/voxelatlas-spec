@@ -183,7 +183,7 @@ paths:
         "404":
           description: Could not create Room because given User could not be found.
 
-  /users/{userid}/friends:
+  /users/{userid}/friendships:
     parameters:
       - in: path
         name: userid
@@ -191,9 +191,21 @@ paths:
           $ref: "#/components/schemas/Id"
         required: true
         description: ID of the user who "owns" the resource.
+      - name: is
+        description: The relationship between the specified user and the returned friendship requests.
+        in: query
+        required: true
+        schema:
+          type: string
+          enum: ["recipient", "requester"]
+      - name: status
+        in: query
+        description: Optionally filter by the status of the friendship requests.
+        schema:
+          $ref: "#/components/schemas/FriendshipStatus"
     get:
       summary: Returns a list of users. Client ID must match {userid}.
-      operationId: getFriendshipsByUserId
+      operationId: getFriendships
       tags: [users, friendships, paginated, authenticated, authorized]
       parameters:
         - $ref: "#/components/parameters/Cursor"
@@ -222,7 +234,7 @@ paths:
       description: >
         Creates a Friendship object where the Requester is the CLIENT user
         and the Recipient is the {userid}. The status is 'PENDING'.
-      operationId: createFriendshipByUserId
+      operationId: createFriendship
       tags: [users, friendships, authenticated, authorized]
       responses:
         "200":
@@ -233,17 +245,63 @@ paths:
                 $ref: "#/components/schemas/Friendship"
         "404":
           description: User not found.
+
+  # In most cases, I would feel like this is too deeply nested
+  # But in this case userid A + userid B makes the most sense.
+  /friendships/{friendshipid}:
+    parameters:
+      - in: path
+        name: friendshipid
+        schema:
+          $ref: "#/components/schemas/Id"
+        required: true
+        description: ID of the Friendship resource.
+    delete:
+      summary: Deletes a Friendship from a User's friends list.
+      operationId: deleteFriendship
+      tags: [users, friendships, authenticated, authorized]
+      parameters:
+        - name: is
+          description: The authenticated user's relationship to the returned friendship request.
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: ["recipient", "requester"]
+      responses:
+        "200":
+          description: Returns the successfully deleted Friend.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "403":
+          description: Client did not have required permissions to delete Friend.
+        "404":
+          description: User or Friend could not be found.
     patch:
       summary: Accepts or Rejects an existing Friend request.
       description: >
         Patches the `status` property of an existing Friendship object
         to be either 'ACCEPTED' or 'REJECTED'.
-        CLIENT ID must match {userid} for 'ACCEPTED' to be valid.
+        CLIENT ID must match recipient for 'ACCEPTED' to be valid.
         CLIENT ID must match recipient or requester for 'REJECTED' to be valid.
-      operationId: updateFriendshipByUserId
+      operationId: updateFriendship
       tags: [users, friendships, authenticated, authorized]
       requestBody:
-        $ref: "#/components/requestBodies/FriendRequestUpdateBody"
+        description: A JSON object containing info necessary to update a Friendship record.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ["ACCEPTED", "REJECTED"]
+                is:
+                  type: string
+                  enum: ["recipient", "requester"]
       responses:
         "200":
           description: The updated Friendship object.
@@ -257,32 +315,6 @@ paths:
           description: Client not authorized to update Friend Request status.
         "404":
           description: User not found.
-
-  # In most cases, I would feel like this is too deeply nested
-  # But in this case userid A + userid B makes the most sense.
-  /friends/{friendid}:
-    parameters:
-      - in: path
-        name: friendid
-        schema:
-          $ref: "#/components/schemas/Id"
-        required: true
-        description: ID of the Friendship resource being deleted.
-    delete:
-      summary: Deletes a Friend from a User's friends list.
-      operationId: deleteFriend
-      tags: [users, friendships, authenticated, authorized]
-      responses:
-        "200":
-          description: Returns the successfully deleted Friend.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-        "403":
-          description: Client did not have required permissions to delete Friend.
-        "404":
-          description: User or Friend could not be found.
 
   # ROOMS SUB-RESOURCES
   /rooms/{roomid}:
@@ -306,7 +338,7 @@ paths:
                 $ref: "#/components/schemas/Room"
         "404":
           description: Room with requested ID could not be found.
-    put:
+    patch:
       summary: Updates a room by its ID.
       operationId: updateRoom
       tags: [rooms, authenticated, authorized]
@@ -645,17 +677,6 @@ components:
                 type: string
                 minLength: 3
                 maxLength: 140
-
-    FriendRequestUpdateBody:
-      description: A JSON object containing the new status of the friendship.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                $ref: "#/components/schemas/FriendshipStatus"
 
   parameters:
     Cursor:
