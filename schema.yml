@@ -125,7 +125,11 @@ paths:
       operationId: deleteUser
       responses:
         "200":
-          description: User was deleted successfully.
+          description: The deleted User.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
         "403":
           description: Client did not have required permissions to delete user.
         "404":
