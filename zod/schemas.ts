@@ -1,7 +1,7 @@
-const { z } = require('zod');
+import { z } from 'zod';
 
 // TODO: Add format and precision requirements to Date string validator?
-function isDateString(str) {
+function isDateString(str: string) {
   return !isNaN(Date.parse(str));
 }
 
@@ -34,7 +34,7 @@ const User = z.object({
 
 const Room = z.object({
   title: z.string().min(3).max(100),
-  url: z.url(),
+  url: z.string().url(),
   creator: User,
   ...commonResourceFields,
 });
@@ -55,8 +55,8 @@ const Like = z.object({
 // TODO: Decide on whether requester/recipient will be populated or not
 // Current server implementation only populates one or the other
 const Friendship = z.object({
-  requester: z.union(User, Id), // These types don't seem to infer as I'd hope by default...
-  recipient: z.union(User, Id),
+  requester: z.union([User, Id]), // These types don't seem to infer as I'd hope by default...
+  recipient: z.union([User, Id]),
   status: FriendshipStatus,
   ...commonResourceFields,
 });
@@ -68,7 +68,7 @@ const PaginationLinks = z.object({
   }).optional(),
 });
 
-module.exports = {
+export {
   Comment,
   Cursor,
   Friendship,

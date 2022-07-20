@@ -1,7 +1,7 @@
-const { z } = require('zod');
-const { Comment, Friendship, Like, Room, PaginationLinks } = require('./schemas');
+import { z } from 'zod';
+import { Comment, Friendship, Like, Room, PaginationLinks, User } from './schemas';
 
-const successfulResponseSchemas = {
+export const successfulResponseSchemas = {
   createComment: Comment,
   createFriendship: Friendship,
   createLike: Like,
@@ -52,5 +52,3 @@ const successfulResponseSchemas = {
   updateRoom: Room,
   updateUser: User,
 }
-
-module.exports = successfulResponseSchemas;
