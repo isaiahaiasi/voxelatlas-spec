@@ -16,6 +16,8 @@ const Id = z.string().regex(
 
 const FriendshipStatus = z.enum(['ACCEPTED', 'PENDING', 'REJECTED']);
 
+const FriendshipRelation = z.enum(['recipient', 'requester']);
+
 const Cursor = z.string().max(2048); // Max URL length
 
 const Limit = z.number().min(1).max(100);
@@ -70,6 +72,7 @@ module.exports = {
   Comment,
   Cursor,
   Friendship,
+  FriendshipRelation,
   FriendshipStatus,
   Id,
   Like,
