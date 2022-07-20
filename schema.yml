@@ -256,6 +256,7 @@ paths:
           $ref: "#/components/schemas/Id"
         required: true
         description: ID of the Friendship resource.
+    # TODO: Not actually sure if I SHOULD expose a "delete Friendship" endpoint...
     delete:
       summary: Deletes a Friendship from a User's friends list.
       operationId: deleteFriendship
@@ -435,7 +436,7 @@ paths:
         description: ID of the room on which the likes are made.
     get:
       summary: Gets a list of Likes on a Room.
-      operationId: getLikesByRoom
+      operationId: getLikesByRoomId
       tags: [rooms, likes, paginated]
       parameters:
         - $ref: "#/components/parameters/Cursor"
@@ -649,9 +650,6 @@ components:
                 minLength: 3
                 maxLength: 15
 
-    # TODO: Not sure what the actual implementation here is.
-    # It almost certainly needs to be sent as multipart form data
-    # In order to include the actual Voxel information.
     RoomBody:
       description: An object containing info necessary to create/update a Room record.
       required: true
