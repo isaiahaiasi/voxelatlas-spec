@@ -1,1 +1,4 @@
-module.exports = require('./public/schema.json');
+module.exports = {
+  schema: require('./schema.json'),
+  validators: require('./zod')
+};
