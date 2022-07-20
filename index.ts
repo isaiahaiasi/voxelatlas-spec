@@ -1,7 +1,7 @@
-import schema from './schema.json';
-import validators from './zod';
+import apiSpec from './schema.json';
+import * as validators from './zod';
 
-export default {
-  schema,
-  validators
+export {
+  apiSpec,
+  validators,
 };
