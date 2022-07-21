@@ -11,7 +11,7 @@ const Timestamp = z.string().refine(isDateString);
 // see: https://github.com/Automattic/mongoose/issues/1959#issuecomment-97457325
 const Id = z.string().regex(
   /^[a-fA-F0-9]{24}$/,
-  { message: "ID must be a 24 character hexadecimal string." }
+  { message: "IDs must be a 24 character hexadecimal string." }
 );
 
 const FriendshipStatus = z.enum(['ACCEPTED', 'PENDING', 'REJECTED']);
@@ -20,7 +20,9 @@ const FriendshipRelation = z.enum(['recipient', 'requester']);
 
 const Cursor = z.string().max(2048); // Max URL length
 
-const Limit = z.number().min(1).max(100);
+// This is a url query param, so it will come in as a string.
+// Unfortunately, this seems to mean I can't use number() validators
+const Limit = z.string().refine(v => Number(v) > 0 && Number(v) <= 100);
 
 const commonResourceFields = {
   id: Id,
