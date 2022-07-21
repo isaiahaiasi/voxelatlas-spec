@@ -1,7 +1,14 @@
-import { z } from 'zod';
+import { z, ZodTypeAny } from 'zod';
 import { Comment, Friendship, Like, Room, PaginationLinks, User } from './resources';
 
-export default {
+function getPaginatedSchema<T extends ZodTypeAny>(zodSchema: T) {
+  return z.object({
+    data: z.array(zodSchema),
+    links: PaginationLinks,
+  });
+}
+
+const responses = {
   createComment: Comment,
   createFriendship: Friendship,
   createLike: Like,
@@ -14,41 +21,18 @@ export default {
   deleteRoom: Room,
   deleteUser: User,
 
-  getCommentsByRoomId: z.object({
-    data: z.array(Comment),
-    links: PaginationLinks,
-  }),
-
-  getFriendships: z.object({
-    data: z.array(Friendship),
-    links: PaginationLinks,
-  }),
-
-  getLikesByRoomId: z.object({
-    data: z.array(Friendship),
-    links: PaginationLinks,
-  }),
-
+  getCommentsByRoomId: getPaginatedSchema(Comment),
+  getFriendships: getPaginatedSchema(Friendship),
+  getLikesByRoomId: getPaginatedSchema(Like),
   getRoomById: Room,
-
-  getRooms: z.object({
-    data: z.array(Friendship),
-    links: PaginationLinks,
-  }),
-
-  getRoomsByUserId: z.object({
-    data: z.array(Room),
-    links: PaginationLinks,
-  }),
-
+  getRooms: getPaginatedSchema(Room),
+  getRoomsByUserId: getPaginatedSchema(Room),
   getUserById: User,
-
-  getUsers: z.object({
-    data: z.array(Friendship),
-    links: PaginationLinks,
-  }),
+  getUsers: getPaginatedSchema(User),
 
   updateFriendship: Friendship,
   updateRoom: Room,
   updateUser: User,
 }
+
+export default responses;
