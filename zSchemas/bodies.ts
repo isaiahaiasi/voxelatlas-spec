@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { User, Room, Comment, FriendshipRelation } from './schemas';
+import { User, Room, Comment, FriendshipRelation } from './resources';
 
 const UserBody = User.pick({ username: true });
 

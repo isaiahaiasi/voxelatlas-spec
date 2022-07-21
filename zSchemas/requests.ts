@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { UserBody, RoomBody, CommentBody, UpdateFriendshipBody } from './requestBodies';
-import { Cursor, Limit, Id, FriendshipStatus, FriendshipRelation } from './schemas';
+import { UserBody, RoomBody, CommentBody, UpdateFriendshipBody } from './bodies';
+import { Cursor, Limit, Id, FriendshipStatus, FriendshipRelation } from './resources';
 
 const queryParams = {
   PaginationQuery: z.object({
@@ -30,7 +30,7 @@ const pathParams = {
 // Associate request validators with operationIds
 // TODO?: Auth? Headers?
 
-export const requestSchemas = {
+export default {
   createUser: z.object({
     body: UserBody,
   }),

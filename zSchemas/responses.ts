@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { Comment, Friendship, Like, Room, PaginationLinks, User } from './schemas';
+import { Comment, Friendship, Like, Room, PaginationLinks, User } from './resources';
 
-export const successfulResponseSchemas = {
+export default {
   createComment: Comment,
   createFriendship: Friendship,
   createLike: Like,

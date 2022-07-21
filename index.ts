@@ -1,7 +1,14 @@
 import apiSpec from './schema.json';
-import * as validators from './zod';
+import { operations } from './operationIds.json'
+import * as zSchemas from './zSchemas';
+
+type OperationId = keyof typeof operations;
+const operationIds = Object.keys(operations) as OperationId[];
 
 export {
   apiSpec,
-  validators,
+  zSchemas,
+  operations,
+  OperationId,
+  operationIds,
 };
