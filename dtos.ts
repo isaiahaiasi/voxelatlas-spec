@@ -13,6 +13,7 @@ export type Dto = {
 };
 
 export type RootPaginatedResponse = {
+  data: any[];
   links: z.infer<typeof PaginationLinks>;
 }
 
