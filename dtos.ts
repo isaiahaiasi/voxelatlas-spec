@@ -1,5 +1,6 @@
-import { resources } from './zSchemas';
 import { z } from 'zod';
+import { resources } from './zSchemas';
+import { PaginationLinks } from "./zSchemas/resources";
 
 const { Comment, Friendship, Like, Room, User } = resources;
 
@@ -10,6 +11,10 @@ type SchemaObjectName = keyof typeof schemaObjects;
 export type Dto = {
   [key in SchemaObjectName]: z.infer<typeof schemaObjects[key]>
 };
+
+export type RootPaginatedResponse = {
+  links: z.infer<typeof PaginationLinks>;
+}
 
 function getFields<T extends keyof Dto>(name: T) {
   return Object.keys(schemaObjects[name].shape) as (keyof Dto[T])[];
