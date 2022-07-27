@@ -1,0 +1,1 @@
+export type PaginatedOperationId = "getUsers"|"getRooms"|"getRoomsByUserId"|"getFriendships"|"getCommentsByRoomId"|"getLikesByRoomId"

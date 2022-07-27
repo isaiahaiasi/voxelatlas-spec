@@ -12,11 +12,6 @@ export type Dto = {
   [key in SchemaObjectName]: z.infer<typeof schemaObjects[key]>
 };
 
-export type RootPaginatedResponse = {
-  data: any[];
-  links: z.infer<typeof PaginationLinks>;
-}
-
 function getFields<T extends keyof Dto>(name: T) {
   return Object.keys(schemaObjects[name].shape) as (keyof Dto[T])[];
 }

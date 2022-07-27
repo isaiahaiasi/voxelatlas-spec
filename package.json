@@ -1,6 +1,6 @@
 {
   "name": "@isaiahaiasi/voxelatlas-spec",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "OpenAPI documentation for the VoxelAtlas API",
   "homepage": "https://github.com/isaiahaiasi/voxelatlas-spec",
   "main": "public/index.js",
@@ -8,7 +8,7 @@
     "public"
   ],
   "scripts": {
-    "jsonify": "js-yaml schema.yml > schema.json && node exportOperationIds.js",
+    "jsonify": "js-yaml schema.yml > src/schema.json && node writeDerivedJsonFiles.js",
     "build": "npm run jsonify && tsc --project .",
     "test": "npm run jsonify && jest",
     "deploy": "npm run build && npm run test && npm publish"
@@ -25,6 +25,7 @@
     "node": ">=16.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^28.1.6",
     "jest": "^28.1.1",
     "js-yaml": "^4.1.0"
   },
