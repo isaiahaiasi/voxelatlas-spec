@@ -10,11 +10,15 @@ const rootPaginatedResponse = z.object({
   links: zSchemas.resources.PaginationLinks,
 })
 
+type PaginatedResponseData<S extends PaginatedOperationId> = z.infer<typeof zSchemas.responses[S]>['data'][number];
+
 type RootPaginatedResponse = z.infer<typeof rootPaginatedResponse>;
 
 type OperationId = keyof typeof operations;
 
 const operationIds = Object.keys(operations) as OperationId[];
+
+
 
 export {
   apiSpec,
@@ -24,6 +28,7 @@ export {
   operationIds,
   operations,
   PaginatedOperationId,
+  PaginatedResponseData,
   RootPaginatedResponse,
   zSchemas,
 };
