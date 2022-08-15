@@ -8,6 +8,11 @@ function getPaginatedSchema<T extends ZodTypeAny>(zodSchema: T) {
   });
 }
 
+export const rootPaginatedResponse = z.object({
+  data: z.any().array(),
+  links: PaginationLinks,
+});
+
 const responses = {
   createComment: Comment,
   createFriendship: Friendship,
