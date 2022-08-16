@@ -49,7 +49,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/User"
         "400":
           description: Invalid new user data was submitted.
   /rooms:
@@ -94,7 +98,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/User"
         "404":
           description: User could not be found.
     # TODO: Not decided on best Method to update entities.
@@ -112,7 +120,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/User"
         "400":
           description: Invalid value.
         "403":
@@ -129,7 +141,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/User"
         "403":
           description: Client did not have required permissions to delete user.
         "404":
@@ -179,7 +195,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Room"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Room"
         "400":
           description: Could not create Room due to malformed data.
         "403":
@@ -246,7 +266,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Friendship"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Friendship"
         "404":
           description: User not found.
 
@@ -279,7 +303,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/User"
         "403":
           description: Client did not have required permissions to delete Friend.
         "404":
@@ -300,20 +328,28 @@ paths:
           application/json:
             schema:
               type: object
+              required: [data]
               properties:
-                status:
-                  type: string
-                  enum: ["ACCEPTED", "REJECTED"]
-                is:
-                  type: string
-                  enum: ["recipient", "requester"]
+                data:
+                  type: object
+                  properties:
+                    status:
+                      type: string
+                      enum: ["ACCEPTED", "REJECTED"]
+                    is:
+                      type: string
+                      enum: ["recipient", "requester"]
       responses:
         "200":
           description: The updated Friendship object.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Friendship"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Friendship"
         "400":
           description: Invalid value.
         "403":
@@ -340,7 +376,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Room"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Room"
         "404":
           description: Room with requested ID could not be found.
     patch:
@@ -355,7 +395,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Room"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Room"
         "400":
           description: Invalid value.
         "403":
@@ -372,7 +416,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Room"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Room"
         "403":
           description: Client did not have required permissions to delete room.
         "404":
@@ -422,7 +470,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Comment"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Comment"
         "400":
           description: Invalid data.
         "403":
@@ -473,7 +525,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Like"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Like"
         "403":
           description: Attempted to like while not authenticated.
         "404":
@@ -497,7 +553,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Comment"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Room"
         "403":
           description: Client did not have the required permissions to delete comment.
         "404":
@@ -521,7 +581,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Like"
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Room"
         "403":
           description: Client did not have the required permissions to delete Like.
         "404":

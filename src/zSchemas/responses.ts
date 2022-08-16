@@ -8,36 +8,42 @@ function getPaginatedSchema<T extends ZodTypeAny>(zodSchema: T) {
   });
 }
 
+function getStandardResponse<T extends ZodTypeAny>(zodSchema: T) {
+  return z.object({
+    data: zodSchema,
+  })
+}
+
 export const rootPaginatedResponse = z.object({
   data: z.any().array(),
   links: PaginationLinks,
 });
 
 const responses = {
-  createComment: Comment,
-  createFriendship: Friendship,
-  createLike: Like,
-  createRoom: Room,
-  createUser: User,
+  createComment: getStandardResponse(Comment),
+  createFriendship: getStandardResponse(Friendship),
+  createLike: getStandardResponse(Like),
+  createRoom: getStandardResponse(Room),
+  createUser: getStandardResponse(User),
 
-  deleteComment: Comment,
-  deleteFriendship: Friendship,
-  deleteLike: Like,
-  deleteRoom: Room,
-  deleteUser: User,
+  deleteComment: getStandardResponse(Comment),
+  deleteFriendship: getStandardResponse(Friendship),
+  deleteLike: getStandardResponse(Like),
+  deleteRoom: getStandardResponse(Room),
+  deleteUser: getStandardResponse(User),
 
   getCommentsByRoomId: getPaginatedSchema(Comment),
   getFriendships: getPaginatedSchema(Friendship),
   getLikesByRoomId: getPaginatedSchema(Like),
-  getRoomById: Room,
+  getRoomById: getStandardResponse(Room),
   getRooms: getPaginatedSchema(Room),
   getRoomsByUserId: getPaginatedSchema(Room),
-  getUserById: User,
+  getUserById: getStandardResponse(User),
   getUsers: getPaginatedSchema(User),
 
-  updateFriendship: Friendship,
-  updateRoom: Room,
-  updateUser: User,
+  updateFriendship: getStandardResponse(Friendship),
+  updateRoom: getStandardResponse(Room),
+  updateUser: getStandardResponse(User),
 }
 
 export default responses;
