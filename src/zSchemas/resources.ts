@@ -36,8 +36,10 @@ const User = z.object({
 
 const Room = z.object({
   title: z.string().min(3).max(100),
-  url: z.string().url(),
+  dataUrl: z.string().url(),
   creator: User,
+  likeCount: z.number(),
+  commentCount: z.number(),
   ...commonResourceFields,
 });
 

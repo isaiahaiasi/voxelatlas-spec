@@ -614,24 +614,29 @@ components:
       type: object
       required:
         - title
-        - url
+        - dataUrl
         - creator
         - createdAt
         - id
+        - likeCount
+        - commentCount
       properties:
         title:
           type: string
           minLength: 3
           maxLength: 100
-        url:
+        dataUrl:
           type: string
+          format: url
         creator:
           $ref: "#/components/schemas/User"
         createdAt:
           $ref: "#/components/schemas/Timestamp"
         id:
           $ref: "#/components/schemas/Id"
-        likes:
+        likeCount:
+          type: number
+        commentCount:
           type: number
     Comment:
       type: object
