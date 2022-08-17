@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { resources } from './zSchemas';
-import { PaginationLinks } from "./zSchemas/resources";
 
 const { Comment, Friendship, Like, Room, User } = resources;
 

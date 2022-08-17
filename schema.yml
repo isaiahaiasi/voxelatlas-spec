@@ -274,6 +274,41 @@ paths:
         "404":
           description: User not found.
 
+  # ! NOTE: Returns the Like resources themselves.
+  # This isn't for fetching a user's liked *ROOMS*.
+  # For that, perhaps add an optional query param to getRoomsByUserId?
+  /users/{userid}/likes:
+    parameters:
+      - in: path
+        name: userid
+        schema:
+          $ref: "#/components/schemas/Id"
+        required: true
+        description: ID of the user who "owns" the resource.
+    get:
+      summary: Gets all the likes created by a given User.
+      operationId: getLikesByUserId
+      tags: [users, likes, paginated]
+      parameters:
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: List of Likes.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [links, data]
+                properties:
+                  links:
+                    $ref: "#/components/schemas/PaginationLinks"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Like"
+        "404":
+          description: User not found.
   # In most cases, I would feel like this is too deeply nested
   # But in this case userid A + userid B makes the most sense.
   /friendships/{friendshipid}:

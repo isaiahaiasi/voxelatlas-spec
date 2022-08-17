@@ -121,6 +121,12 @@ export default {
     query: queryParams.PaginationQuery,
   }),
 
+  getLikesByUserId: z.object({
+    ...defaultRequestObject,
+    params: pathParams.UserId,
+    query: queryParams.PaginationQuery,
+  }),
+
   getLike: z.object({
     ...defaultRequestObject,
     params: z.object({
