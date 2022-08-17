@@ -535,6 +535,37 @@ paths:
         "404":
           description: Room not found.
 
+  /rooms/{roomid}/likes/{userid}:
+    parameters:
+      - in: path
+        name: roomid
+        schema:
+          $ref: "#/components/schemas/Id"
+        required: true
+      - in: path
+        name: userid
+        schema:
+          $ref: "#/components/schemas/Id"
+        required: true
+    get:
+      summary: Get a particular Like based on Room + User. Ideally this would
+      operationId: getLike
+      tags: [like]
+      responses:
+        "200":
+          description: Returns the requested Like
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/Like"
+        "404":
+          description: Like not found.
+
   /comments/{commentid}:
     parameters:
       - in: path

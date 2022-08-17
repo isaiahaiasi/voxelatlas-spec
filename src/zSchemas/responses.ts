@@ -35,6 +35,7 @@ const responses = {
   getCommentsByRoomId: getPaginatedSchema(Comment),
   getFriendships: getPaginatedSchema(Friendship),
   getLikesByRoomId: getPaginatedSchema(Like),
+  getLike: getStandardResponse(Like),
   getRoomById: getStandardResponse(Room),
   getRooms: getPaginatedSchema(Room),
   getRoomsByUserId: getPaginatedSchema(Room),

@@ -121,6 +121,14 @@ export default {
     query: queryParams.PaginationQuery,
   }),
 
+  getLike: z.object({
+    ...defaultRequestObject,
+    params: z.object({
+      roomid: Id,
+      userid: Id,
+    }),
+  }),
+
   getRoomById: z.object({
     ...defaultRequestObject,
     params: pathParams.RoomId,
