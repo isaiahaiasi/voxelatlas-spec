@@ -104,6 +104,11 @@ export default {
     query: queryParams.PaginationQuery,
   }),
 
+  getFriends: z.object({
+    ...defaultRequestObject,
+    params: pathParams.UserId,
+  }),
+
   getFriendships: z.object({
     ...defaultRequestObject,
     params: pathParams.UserId,
