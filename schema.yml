@@ -166,6 +166,17 @@ paths:
       parameters:
         - $ref: "#/components/parameters/Cursor"
         - $ref: "#/components/parameters/Limit"
+        # TODO: Not sure I like this in a query param
+        # On the one hand, it kind of makes sense?
+        # On the other, it makes query invalidation more difficult,
+        # and is perhaps unintuitive
+        - name: rel
+          in: query
+          description: Relationship between the rooms and the user.
+          schema:
+            type: string
+            enum: ["created", "liked"]
+            default: "created"
       responses:
         "200":
           description: List of Rooms.

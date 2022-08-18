@@ -148,7 +148,11 @@ export default {
   getRoomsByUserId: z.object({
     ...defaultRequestObject,
     params: pathParams.UserId,
-    query: queryParams.PaginationQuery,
+    query: queryParams.PaginationQuery.merge(
+      z.object({
+        rel: z.enum(['created', 'liked']).optional(),
+      }),
+    ),
   }),
 
   getUserById: z.object({
