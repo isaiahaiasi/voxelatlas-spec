@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { resources } from './zSchemas';
 
-const { Comment, Friendship, Like, Room, User } = resources;
+const { Comment, Friend, Friendship, Like, Room, User } = resources;
 
-const schemaObjects = { Comment, Friendship, Like, Room, User };
+const schemaObjects = { Comment, Friend, Friendship, Like, Room, User };
 
 type SchemaObjectName = keyof typeof schemaObjects;
 
@@ -18,6 +18,7 @@ function getFields<T extends keyof Dto>(name: T) {
 // This could map so easily, but I'm not sure how to preserve individual typings.
 export const dtoFields = {
   comment: getFields('Comment'),
+  friend: getFields('Friend'),
   friendship: getFields('Friendship'),
   like: getFields('Like'),
   room: getFields('Room'),
