@@ -107,6 +107,12 @@ export default {
   getFriends: z.object({
     ...defaultRequestObject,
     params: pathParams.UserId,
+    query: z.object({
+      is: FriendshipRelation.optional(),
+      status: FriendshipStatus.optional(),
+      limit: Limit.optional(),
+      cursor: Cursor.optional(),
+    }),
   }),
 
   getFriendships: z.object({

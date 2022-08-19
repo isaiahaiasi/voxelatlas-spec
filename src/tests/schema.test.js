@@ -16,6 +16,18 @@ describe('OpenAPI description for ShoeVox', () => {
     });
   });
 
+  test('every operationId appears only once', () => {
+    const operationIds = new Map();
+
+    Object.keys(api.paths).forEach((apiPath) => {
+      const methodData = getMethodsFromPath(api.paths[apiPath]);
+      Object.values(methodData).forEach((v) => {
+        expect(operationIds.get(v.operationId)).toBeUndefined();
+        operationIds.set(v.operationId, true);
+      });
+    });
+  })
+
   test('every required property of a schema is defined on the schema', () => {
     Object.values(api.components.schemas).forEach((schema) => {
       if (schema.type === 'object') {

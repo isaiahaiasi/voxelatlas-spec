@@ -1,5 +1,5 @@
 import { z, ZodTypeAny } from 'zod';
-import { Comment, Friendship, Like, Room, PaginationLinks, User } from './resources';
+import { Comment, Friendship, Like, Room, PaginationLinks, User, Friend } from './resources';
 
 function getPaginatedSchema<T extends ZodTypeAny>(zodSchema: T) {
   return z.object({
@@ -33,7 +33,7 @@ const responses = {
   deleteUser: getStandardResponse(User),
 
   getCommentsByRoomId: getPaginatedSchema(Comment),
-  getFriends: getStandardResponse(User),
+  getFriends: getStandardResponse(Friend),
   getFriendships: getPaginatedSchema(Friendship),
   getLikesByRoomId: getPaginatedSchema(Like),
   getLikesByUserId: getPaginatedSchema(Like),

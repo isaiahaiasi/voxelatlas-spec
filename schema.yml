@@ -230,12 +230,24 @@ paths:
       summary: Returns a list of users. Client ID must match {userid}.
       operationId: getFriends
       tags: [users, friendships]
-      # parameters:
-      #   - $ref: "#/components/parameters/Cursor"
-      #   - $ref: "#/components/parameters/Limit"
+      parameters:
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+        - name: is
+          description: The relationship between the specified user and the returned friendship requests.
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: ["recipient", "requester"]
+        - name: status
+          in: query
+          description: Optionally filter by the status of the friendship requests.
+          schema:
+            $ref: "#/components/schemas/FriendshipStatus"
       responses:
         "200":
-          description: A JSON array of User objects.
+          description: A JSON array of Friend objects.
           content:
             application/json:
               schema:
@@ -245,7 +257,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/User"
+                      $ref: "#/components/schemas/Friend"
         "404":
           description: User not found.
   /users/{userid}/friendships:
@@ -799,6 +811,25 @@ components:
           $ref: "#/components/schemas/Timestamp"
         id:
           $ref: "#/components/schemas/Id"
+    Friend:
+      type: object
+      required: [initiator, status, user, createdAt, id]
+      properties:
+        initiator:
+          type: boolean
+        status:
+          $ref: "#/components/schemas/FriendshipStatus"
+        user:
+          $ref: "#/components/schemas/User"
+        createdAt:
+          $ref: "#/components/schemas/Timestamp"
+        id:
+          $ref: "#/components/schemas/Id"
+        # Optional:
+        acceptDate:
+          $ref: "#/components/schemas/Timestamp"
+        rejectDate:
+          $ref: "#/components/schemas/Timestamp"
     FriendshipStatus:
       type: string
       enum: ["ACCEPTED", "PENDING", "REJECTED"]

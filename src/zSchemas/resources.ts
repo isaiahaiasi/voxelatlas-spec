@@ -58,10 +58,22 @@ const Like = z.object({
 
 // TODO: Decide on whether requester/recipient will be populated or not
 // Current server implementation only populates one or the other
+// ! NOTE: This Resource is how it is currently stored in MongoDB,
+// ! but probably isn't a very useful entity to expose via API.
+// ! See "Friend" as more usable public Resource.
 const Friendship = z.object({
   requester: z.union([User, Id]), // These types don't seem to infer as I'd hope by default...
   recipient: z.union([User, Id]),
   status: FriendshipStatus,
+  ...commonResourceFields,
+});
+
+const Friend = z.object({
+  initiator: z.boolean(),
+  status: FriendshipStatus,
+  acceptDate: Timestamp.optional(),
+  rejectDate: Timestamp.optional(),
+  user: User,
   ...commonResourceFields,
 });
 
@@ -75,6 +87,7 @@ const PaginationLinks = z.object({
 export {
   Comment,
   Cursor,
+  Friend,
   Friendship,
   FriendshipRelation,
   FriendshipStatus,
