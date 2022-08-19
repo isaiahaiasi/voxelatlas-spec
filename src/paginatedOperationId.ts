@@ -3,6 +3,7 @@
 export type PaginatedOperationId = "getUsers"
 |"getRooms"
 |"getRoomsByUserId"
+|"getFriends"
 |"getFriendships"
 |"getLikesByUserId"
 |"getCommentsByRoomId"

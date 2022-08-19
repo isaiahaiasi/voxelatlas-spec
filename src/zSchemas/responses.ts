@@ -33,7 +33,7 @@ const responses = {
   deleteUser: getStandardResponse(User),
 
   getCommentsByRoomId: getPaginatedSchema(Comment),
-  getFriends: getStandardResponse(Friend),
+  getFriends: getPaginatedSchema(Friend),
   getFriendships: getPaginatedSchema(Friendship),
   getLikesByRoomId: getPaginatedSchema(Like),
   getLikesByUserId: getPaginatedSchema(Like),

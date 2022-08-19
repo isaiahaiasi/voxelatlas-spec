@@ -229,7 +229,7 @@ paths:
     get:
       summary: Returns a list of users. Client ID must match {userid}.
       operationId: getFriends
-      tags: [users, friendships]
+      tags: [users, friends, friendships, paginated]
       parameters:
         - $ref: "#/components/parameters/Cursor"
         - $ref: "#/components/parameters/Limit"
@@ -252,12 +252,14 @@ paths:
             application/json:
               schema:
                 type: object
-                required: [data]
+                required: [data, links]
                 properties:
                   data:
                     type: array
                     items:
                       $ref: "#/components/schemas/Friend"
+                  links:
+                    $ref: "#/components/schemas/PaginationLinks"
         "404":
           description: User not found.
   /users/{userid}/friendships:
