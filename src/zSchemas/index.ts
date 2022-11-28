@@ -1,6 +1,6 @@
-import requests from './requests';
+import * as requests from './requests';
 import * as resources from './resources';
-import responses from './responses';
+import * as responses from './responses';
 
 export {
   resources,

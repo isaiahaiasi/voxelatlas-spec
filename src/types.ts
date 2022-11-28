@@ -2,7 +2,12 @@ import { z } from "zod";
 import { operations, zSchemas } from ".";
 import { PaginatedOperationId } from "./paginatedOperationId";
 import { requests, responses } from "./zSchemas";
-import { rootPaginatedResponse } from "./zSchemas/responses";
+import { PaginationLinks } from "./zSchemas/resources";
+
+const rootPaginatedResponse = z.object({
+  data: z.any().array(),
+  links: PaginationLinks,
+});
 
 // GENERAL OPERATION TYPES
 export type OperationId = keyof typeof operations;

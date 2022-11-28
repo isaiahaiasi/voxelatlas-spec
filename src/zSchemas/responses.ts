@@ -14,39 +14,30 @@ function getStandardResponse<T extends ZodTypeAny>(zodSchema: T) {
   })
 }
 
-export const rootPaginatedResponse = z.object({
-  data: z.any().array(),
-  links: PaginationLinks,
-});
+export const createComment = getStandardResponse(Comment);
+export const createFriendship = getStandardResponse(Friendship);
+export const createLike = getStandardResponse(Like);
+export const createRoom = getStandardResponse(Room);
+export const createUser = getStandardResponse(User);
 
-const responses = {
-  createComment: getStandardResponse(Comment),
-  createFriendship: getStandardResponse(Friendship),
-  createLike: getStandardResponse(Like),
-  createRoom: getStandardResponse(Room),
-  createUser: getStandardResponse(User),
+export const deleteComment = getStandardResponse(Comment);
+export const deleteFriendship = getStandardResponse(Friendship);
+export const deleteLike = getStandardResponse(Like);
+export const deleteRoom = getStandardResponse(Room);
+export const deleteUser = getStandardResponse(User);
 
-  deleteComment: getStandardResponse(Comment),
-  deleteFriendship: getStandardResponse(Friendship),
-  deleteLike: getStandardResponse(Like),
-  deleteRoom: getStandardResponse(Room),
-  deleteUser: getStandardResponse(User),
+export const getCommentsByRoomId = getPaginatedSchema(Comment);
+export const getFriends = getPaginatedSchema(Friend);
+export const getFriendships = getPaginatedSchema(Friendship);
+export const getLikesByRoomId = getPaginatedSchema(Like);
+export const getLikesByUserId = getPaginatedSchema(Like);
+export const getLike = getStandardResponse(Like);
+export const getRoomById = getStandardResponse(Room);
+export const getRooms = getPaginatedSchema(Room);
+export const getRoomsByUserId = getPaginatedSchema(Room);
+export const getUserById = getStandardResponse(User);
+export const getUsers = getPaginatedSchema(User);
 
-  getCommentsByRoomId: getPaginatedSchema(Comment),
-  getFriends: getPaginatedSchema(Friend),
-  getFriendships: getPaginatedSchema(Friendship),
-  getLikesByRoomId: getPaginatedSchema(Like),
-  getLikesByUserId: getPaginatedSchema(Like),
-  getLike: getStandardResponse(Like),
-  getRoomById: getStandardResponse(Room),
-  getRooms: getPaginatedSchema(Room),
-  getRoomsByUserId: getPaginatedSchema(Room),
-  getUserById: getStandardResponse(User),
-  getUsers: getPaginatedSchema(User),
-
-  updateFriendship: getStandardResponse(Friendship),
-  updateRoom: getStandardResponse(Room),
-  updateUser: getStandardResponse(User),
-}
-
-export default responses;
+export const updateFriendship = getStandardResponse(Friendship);
+export const updateRoom = getStandardResponse(Room);
+export const updateUser = getStandardResponse(User);

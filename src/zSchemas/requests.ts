@@ -41,162 +41,161 @@ const defaultRequestObject = {
   query: z.object({}),
 };
 
-export default {
-  createUser: z.object({
-    ...defaultRequestObject,
-    body: bodies.User,
-  }),
 
-  createComment: z.object({
-    ...defaultRequestObject,
-    params: pathParams.RoomId,
-    body: bodies.Comment,
-  }),
+export const createUser = z.object({
+  ...defaultRequestObject,
+  body: bodies.User,
+});
 
-  createFriendship: z.object({
-    ...defaultRequestObject,
-    params: pathParams.UserId,
-  }),
+export const createComment = z.object({
+  ...defaultRequestObject,
+  params: pathParams.RoomId,
+  body: bodies.Comment,
+});
 
-  createLike: z.object({
-    ...defaultRequestObject,
-    params: pathParams.RoomId,
-  }),
+export const createFriendship = z.object({
+  ...defaultRequestObject,
+  params: pathParams.UserId,
+});
 
-  createRoom: z.object({
-    ...defaultRequestObject,
-    params: pathParams.UserId,
-    // TODO: proper implementation of Room RequestBody (ie, the actual data)
-    body: bodies.Room,
-  }),
+export const createLike = z.object({
+  ...defaultRequestObject,
+  params: pathParams.RoomId,
+});
 
-  deleteComment: z.object({
-    ...defaultRequestObject,
-    params: pathParams.CommentId,
-  }),
+export const createRoom = z.object({
+  ...defaultRequestObject,
+  params: pathParams.UserId,
+  // TODO: proper implementation of Room RequestBody (ie, the actual data)
+  body: bodies.Room,
+});
 
-  deleteFriendship: z.object({
-    ...defaultRequestObject,
-    params: pathParams.FriendshipId,
-    query: z.object({
-      is: FriendshipRelation,
+export const deleteComment = z.object({
+  ...defaultRequestObject,
+  params: pathParams.CommentId,
+});
+
+export const deleteFriendship = z.object({
+  ...defaultRequestObject,
+  params: pathParams.FriendshipId,
+  query: z.object({
+    is: FriendshipRelation,
+  }),
+});
+
+export const deleteLike = z.object({
+  ...defaultRequestObject,
+  params: pathParams.LikeId,
+});
+
+export const deleteRoom = z.object({
+  ...defaultRequestObject,
+  params: pathParams.RoomId,
+});
+
+export const deleteUser = z.object({
+  ...defaultRequestObject,
+  params: pathParams.UserId,
+});
+
+export const getCommentsByRoomId = z.object({
+  ...defaultRequestObject,
+  params: pathParams.RoomId,
+  query: queryParams.PaginationQuery,
+});
+
+export const getFriends = z.object({
+  ...defaultRequestObject,
+  params: pathParams.UserId,
+  query: z.object({
+    is: FriendshipRelation.optional(),
+    status: FriendshipStatus.optional(),
+    limit: Limit.optional(),
+    cursor: Cursor.optional(),
+  }),
+});
+
+export const getFriendships = z.object({
+  ...defaultRequestObject,
+  params: pathParams.UserId,
+  query: z.object({
+    is: FriendshipRelation,
+    status: FriendshipStatus.optional(),
+    limit: Limit.optional(),
+    cursor: Cursor.optional(),
+  }),
+});
+
+export const getLikesByRoomId = z.object({
+  ...defaultRequestObject,
+  params: pathParams.RoomId,
+  query: queryParams.PaginationQuery,
+});
+
+export const getLikesByUserId = z.object({
+  ...defaultRequestObject,
+  params: pathParams.UserId,
+  query: queryParams.PaginationQuery,
+});
+
+export const getLike = z.object({
+  ...defaultRequestObject,
+  params: z.object({
+    roomid: Id,
+    userid: Id,
+  }),
+});
+
+export const getRoomById = z.object({
+  ...defaultRequestObject,
+  params: pathParams.RoomId,
+});
+
+export const getRooms = z.object({
+  ...defaultRequestObject,
+  query: queryParams.PaginationQuery,
+});
+
+export const getRoomsByUserId = z.object({
+  ...defaultRequestObject,
+  params: pathParams.UserId,
+  query: queryParams.PaginationQuery.merge(
+    z.object({
+      rel: z.enum(['created', 'liked', 'friends']).optional(),
     }),
-  }),
+  ),
+});
 
-  deleteLike: z.object({
-    ...defaultRequestObject,
-    params: pathParams.LikeId,
-  }),
+export const getUserById = z.object({
+  ...defaultRequestObject,
+  params: pathParams.UserId,
+});
 
-  deleteRoom: z.object({
-    ...defaultRequestObject,
-    params: pathParams.RoomId,
-  }),
+export const getUsers = z.object({
+  ...defaultRequestObject,
+  query: queryParams.PaginationQuery,
+});
 
-  deleteUser: z.object({
-    ...defaultRequestObject,
-    params: pathParams.UserId,
-  }),
+export const updateFriendship = z.object({
+  ...defaultRequestObject,
+  params: pathParams.FriendshipId,
+  body: z.object({
+    is: FriendshipRelation,
+    status: z.enum(['ACCEPTED', 'REJECTED'])
+  }).refine(
+    // Only the recipient may accept the request
+    (data) => data.is === 'recipient' || data.status !== 'ACCEPTED',
+  ),
+});
 
-  getCommentsByRoomId: z.object({
-    ...defaultRequestObject,
-    params: pathParams.RoomId,
-    query: queryParams.PaginationQuery,
-  }),
+export const updateRoom = z.object({
+  ...defaultRequestObject,
+  params: pathParams.RoomId,
+  body: bodies.Room,
+});
 
-  getFriends: z.object({
-    ...defaultRequestObject,
-    params: pathParams.UserId,
-    query: z.object({
-      is: FriendshipRelation.optional(),
-      status: FriendshipStatus.optional(),
-      limit: Limit.optional(),
-      cursor: Cursor.optional(),
-    }),
-  }),
-
-  getFriendships: z.object({
-    ...defaultRequestObject,
-    params: pathParams.UserId,
-    query: z.object({
-      is: FriendshipRelation,
-      status: FriendshipStatus.optional(),
-      limit: Limit.optional(),
-      cursor: Cursor.optional(),
-    }),
-  }),
-
-  getLikesByRoomId: z.object({
-    ...defaultRequestObject,
-    params: pathParams.RoomId,
-    query: queryParams.PaginationQuery,
-  }),
-
-  getLikesByUserId: z.object({
-    ...defaultRequestObject,
-    params: pathParams.UserId,
-    query: queryParams.PaginationQuery,
-  }),
-
-  getLike: z.object({
-    ...defaultRequestObject,
-    params: z.object({
-      roomid: Id,
-      userid: Id,
-    }),
-  }),
-
-  getRoomById: z.object({
-    ...defaultRequestObject,
-    params: pathParams.RoomId,
-  }),
-
-  getRooms: z.object({
-    ...defaultRequestObject,
-    query: queryParams.PaginationQuery,
-  }),
-
-  getRoomsByUserId: z.object({
-    ...defaultRequestObject,
-    params: pathParams.UserId,
-    query: queryParams.PaginationQuery.merge(
-      z.object({
-        rel: z.enum(['created', 'liked', 'friends']).optional(),
-      }),
-    ),
-  }),
-
-  getUserById: z.object({
-    ...defaultRequestObject,
-    params: pathParams.UserId,
-  }),
-
-  getUsers: z.object({
-    ...defaultRequestObject,
-    query: queryParams.PaginationQuery,
-  }),
-
-  updateFriendship: z.object({
-    ...defaultRequestObject,
-    params: pathParams.FriendshipId,
-    body: z.object({
-      is: FriendshipRelation,
-      status: z.enum(['ACCEPTED', 'REJECTED'])
-    }).refine(
-      // Only the recipient may accept the request
-      (data) => data.is === 'recipient' || data.status !== 'ACCEPTED',
-    ),
-  }),
-
-  updateRoom: z.object({
-    ...defaultRequestObject,
-    params: pathParams.RoomId,
-    body: bodies.Room,
-  }),
-
-  updateUser: z.object({
-    ...defaultRequestObject,
-    params: pathParams.UserId,
-    body: bodies.User,
-  }),
-}
+export const updateUser = z.object({
+  ...defaultRequestObject,
+  params: pathParams.UserId,
+  body: bodies.User,
+});
