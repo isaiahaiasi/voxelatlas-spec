@@ -175,7 +175,10 @@ paths:
           description: Relationship between the rooms and the user.
           schema:
             type: string
-            enum: ["created", "liked"]
+            enum:
+              - "created" # rooms created by user
+              - "liked" # rooms liked by user
+              - "friends" # rooms created by friends of user
             default: "created"
       responses:
         "200":

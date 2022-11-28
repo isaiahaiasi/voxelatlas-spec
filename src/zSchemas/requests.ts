@@ -161,7 +161,7 @@ export default {
     params: pathParams.UserId,
     query: queryParams.PaginationQuery.merge(
       z.object({
-        rel: z.enum(['created', 'liked']).optional(),
+        rel: z.enum(['created', 'liked', 'friends']).optional(),
       }),
     ),
   }),
