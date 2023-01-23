@@ -1,17 +1,19 @@
 import { z, ZodTypeAny } from 'zod';
-import { Comment, Friendship, Like, Room, PaginationLinks, User, Friend } from './resources';
+import {
+	Comment, Friendship, Like, Room, PaginationLinks, User, Friend,
+} from './resources';
 
 function getPaginatedSchema<T extends ZodTypeAny>(zodSchema: T) {
-  return z.object({
-    data: z.array(zodSchema),
-    links: PaginationLinks,
-  });
+	return z.object({
+		data: z.array(zodSchema),
+		links: PaginationLinks,
+	});
 }
 
 function getStandardResponse<T extends ZodTypeAny>(zodSchema: T) {
-  return z.object({
-    data: zodSchema,
-  })
+	return z.object({
+		data: zodSchema,
+	});
 }
 
 export const createComment = getStandardResponse(Comment);

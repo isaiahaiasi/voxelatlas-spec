@@ -1,19 +1,14 @@
-import { Dto, dtoFields } from './dtos';
-import { operations } from './operations.json';
-import { OperationId } from './types';
-import apiSpec from './schema.json';
-import * as zSchemas from './zSchemas';
+import { OperationId, operationIds, operations } from './operations';
+import * as zSchemas from './schemas';
+import { Resource, resourceFields } from './schemas/resourceHelpers';
 import * as types from './types';
 
-const operationIds = Object.keys(operations) as OperationId[];
-
 export {
-  apiSpec,
-  Dto,
-  dtoFields,
-  OperationId,
-  operationIds,
-  operations,
-  zSchemas,
-  types,
+	Resource,
+	resourceFields,
+	OperationId,
+	operationIds,
+	operations,
+	zSchemas,
+	types,
 };

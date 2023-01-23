@@ -1,17 +1,16 @@
-import { z } from "zod";
-import { operations, zSchemas } from ".";
-import { PaginatedOperationId } from "./paginatedOperationId";
-import { requests, responses } from "./zSchemas";
-import { PaginationLinks } from "./zSchemas/resources";
+import { z } from 'zod';
+import { zSchemas } from '.';
+import { PaginatedOperationId, OperationId } from './operations';
+import { requests, responses } from './schemas';
+import { PaginationLinks } from './schemas/resources';
 
 const rootPaginatedResponse = z.object({
-  data: z.any().array(),
-  links: PaginationLinks,
+	data: z.any().array(),
+	links: PaginationLinks,
 });
 
 // GENERAL OPERATION TYPES
-export type OperationId = keyof typeof operations;
-export type ReadonlyOperationId = `get${any}` & OperationId;
+export type ReadonlyOperationId = `get${string}` & OperationId;
 export type MutableOperationId = Exclude<OperationId, ReadonlyOperationId>;
 
 // PAGINATION ALIASES
@@ -22,6 +21,7 @@ export type PaginatedResponseData<S extends PaginatedOperationId> = PaginatedRes
 // REQUEST ALIASES
 export type ApiRequest<T extends OperationId> = z.infer<typeof requests[T]>;
 export type ApiRequestBody<T extends OperationId> = ApiRequest<T>['body'];
+export type ApiRequestParams<T extends OperationId> = ApiRequest<T>['params'];
 
 // RESPONSE ALIASES
 export type ApiResponse<T extends OperationId> = z.infer<typeof responses[T]>;
