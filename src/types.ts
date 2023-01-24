@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { zSchemas } from '.';
-import { PaginatedOperationId, OperationId } from './operations';
+import { PaginatedOperationId } from './derivedOperationLists';
+import { OperationId } from './operations';
 import { requests, responses } from './schemas';
 import { PaginationLinks } from './schemas/resources';
 
@@ -8,10 +9,6 @@ const rootPaginatedResponse = z.object({
 	data: z.any().array(),
 	links: PaginationLinks,
 });
-
-// GENERAL OPERATION TYPES
-export type ReadonlyOperationId = `get${string}` & OperationId;
-export type MutableOperationId = Exclude<OperationId, ReadonlyOperationId>;
 
 // PAGINATION ALIASES
 export type RootPaginatedResponse = z.infer<typeof rootPaginatedResponse>;

@@ -1,6 +1,8 @@
 import { z } from 'zod';
-import { Comment, Friend, Friendship, Like, Room, User } from './resources';
+import { Comment, Friend, Friendship, Like, Room, User } from './schemas/resources';
 
+// Not all schemas under resources have "shape"
+// TODO: generalize to handle ALL resources
 const schemaObjects = {
 	Comment, Friend, Friendship, Like, Room, User,
 };
